@@ -1,6 +1,6 @@
 #include <assert.h>
 
-
+///add i remove nie dzialaja, bledy w memcpy
 
 
 #ifdef SC_PRINT_ERRORS
@@ -142,10 +142,9 @@ int incrementSign(SignCounter* obj, wchar_t sign)
 {
     int position = findSignPosition(obj, sign);
     if(obj->signArray[i] == sign) obj->countArray[i]++;
-    else insertSign(obj, sign);
-}
+n}
 
-static void removeSign(SignCounter* obj, wchar_t sign)
+static void removeSign(SignCounter* obj, int position)
 {
         //uzywane w przypadku, gdy nie ma w tablicy takowego elementu
     assert(position == obj->signsCount || obj->signArray[position] != sign);
@@ -159,7 +158,7 @@ static void removeSign(SignCounter* obj, wchar_t sign)
     wchar_t* succedings = getPartOfArray(obj->signArray, position, obj->signsCount-1);
     int* succCounts =    getPartOfArray(obj->countArray, position, obj->signsCount-1);
 
-    obj->signsCount++;
+    obj->signsCount--;
     resizeSignsArray(obj);
 
     if(precSigns != NULL)
@@ -178,8 +177,5 @@ static void removeSign(SignCounter* obj, wchar_t sign)
         free(succSigns);
         free(succCounts);
     }
-
-    obj->signArray[position] = sign;
-    obj->countArray[position] = 1;
 }
 

@@ -14,6 +14,8 @@
 #include "signCounter.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+#include <wchar.h>
 
 //niniejsze makrodefinicje sa wymuszone przez dictionary.
 #define DICT_WORD_INSERTED 1
@@ -32,10 +34,14 @@
 #define DICT_ERROR (-1)
 #define DICT_PRINT_ERRORS
 
+#define START_ALPHABET_SIZE 256
+
 struct dictionary
 {
     Node* trie_root;
-    SignCounter* alphabet;
+    int letters;
+    int asize;
+    wchar_t* alphabet;
 };
 
 static void _error(int line, const char* func)
@@ -68,7 +74,7 @@ struct dictionary* dictionary_new()
         free(dict);
         memError();
     }
-
+    /*
     dict->alphabet = newSignCounter();
     if(dict->alphabet == NULL)
     {
@@ -76,21 +82,46 @@ struct dictionary* dictionary_new()
         free(dict);
         memError();
     }
+    */
+    dict->alphabet = malloc(sizeof(wchar_t) * START_ALPHABET_SIZE);
+    dict->asize = START_ALPHABET_SIZE;
+    dict->letters = 0;
     return dict;
 }
 
 void dictionary_done(struct dictionary *dict)
 {
     trieDeleteTrie(dict->trie_root);
-    deleteSignCounter(dict->alphabet);
+    free(dict->alphabet);
     free(dict);
+}
+
+static bool findInAlphabet(struct dictionary* dict, wchar_t sign)
+{
+    for(int i = 0; i < dict->asize; i++)
+        if(dict->alphabet[i] == sign)
+            return true;
+    return false;
+}
+
+static void appendLetterToAlphabet(struct dictionary* dict, wchar_t sign)
+{
+    if(dict->asize == dict->letters)
+        dict->alphabet = realloc(dict->alphabet, sizeof(wchar_t) * 2*dict->asize);
+    assert(dict->letters < dict->asize);
+
+    dict->alphabet[dict->letters] = sign;
+    dict->letters++;
 }
 
 int dictionary_insert(struct dictionary *dict, const wchar_t *word)
 {
     int len = wcslen(word);
-    for(int i = 0; i < wcslen; i++)
-        incrementSign(dict->alphabet, word[i]);
+    for(int i = 0; i < len; i++)
+        if(!findInAlphabet(dict, word[i]))
+            appendLetterToAlphabet(dict, word[i]);
+    //koszmarne rozwiazanie, ale brak czasu na truskawki
+
     if(trieInsertWord(dict->trie_root, word) == TRIE_INSERT_SUCCESS_MODIFIED)
         return DICT_WORD_INSERTED;
     else
@@ -99,15 +130,13 @@ int dictionary_insert(struct dictionary *dict, const wchar_t *word)
 
 int dictionary_delete(struct dictionary *dict, const wchar_t *word)
 {
-    int len = wcslen(word);
-    for(int i = 0; i < wcslen; i++)
-        decrementSign(dict->alphabet, word[i]);
 
     if(trieDeleteWord(dict->trie_root, word) == TRIE_WORD_DELETED)
         return DICT_WORD_DELETED;
     else
         return DICT_WORD_NOT_DELETED;
 }
+
 
 bool dictionary_find(const struct dictionary *dict, const wchar_t* word)
 {
@@ -122,35 +151,44 @@ int dictionary_save(const struct dictionary *dict, FILE* stream)
     if(trieSaveToFile(dict->trie_root, stream) != TRIE_SUCCESS)
         return DICT_SAVE_ERROR;
 
-    if(signCounterSaveToFile(dict->alphabet, stream) != SC_SUCCESS)
-        return DICT_SAVE_ERROR;
+    fwrite(&(dict->letters), sizeof(dict->letters), 1, stream);
+    fwrite(dict->alphabet, sizeof(dict->alphabet[0]), dict->letters, stream);
 
-    return DICT_SAVE_SUCCESS
+    return DICT_SAVE_SUCCESS;
 }
 
 struct dictionary* dictionary_load(FILE* stream)
 {
     struct dictionary* ret = malloc(sizeof(struct dictionary));
-    if(ret == NULL) memError();
+
     ret->trie_root = trieLoadFromFile(stream);
-    if(ret->trie_root == NULL)
-    {
-        free(ret);
-        memError();
-    }
-    ret->alphabet = signCounterLoadFromFile(stream);
-    if(ret->alphabet == NULL)
-    {
-        trieDeleteTrie(ret->trie_root);
-        free(ret)
-        memError();
-    }
+
+    int size;
+    fread(&size, sizeof(size), 1, stream);
+    ret->alphabet = malloc(sizeof(wchar_t) * size);
+    ret->asize = ret->letters = size;
+
+    fread(ret->alphabet, sizeof(wchar_t), size, stream);
+
     return ret;
 }
+
+static wchar_t* insertLetter(wchar_t* word, wchar_t letter, int position)
+{
+    int wordlen = wcslen(word);
+    wchar_t* ret = malloc(wordlen + 1); //1 na wstawiona litere, drugi na \0
+    memcpy(ret, word, position);
+    ret[position] = word;
+    memcpy(ret, &word[position+1], wordlen-position);
+}
+
 
 void dictionary_hints(const struct dictionary *dict, const wchar_t* word,
         struct word_list *list)
 {
+    //generuj slowa przez replace, dodaj je do listy
+    //generuj slowa przez insert, dodaj je do listy
+    //generuj slowa przez delete, dodaj je do listy
 
 }
 
