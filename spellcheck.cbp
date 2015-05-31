@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="spellcheck" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/spellcheck" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-lcmocka" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/spellcheck" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c99" />
+		</Compiler>
+		<Unit filename="src/conf.h.in" />
+		<Unit filename="src/dict-check/dict-check.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/dict-editor/dict-editor.c">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="src/dictionary/dictionary.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/dictionary/dictionary.h" />
+		<Unit filename="src/dictionary/signCounter.h" />
+		<Unit filename="src/dictionary/trie.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/dictionary/trie.h" />
+		<Unit filename="src/dictionary/word_list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/dictionary/word_list.h" />
+		<Unit filename="src/dictionary/word_list_test.c">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="tests/dict-editor/test.sh" />
+		<Unit filename="tests/dict-editor/test0.in" />
+		<Unit filename="tests/dict-editor/test0.out" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

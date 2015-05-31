@@ -10,26 +10,33 @@ const wchar_t* first  = L"First string";
 const wchar_t* second = L"Second string";
 const wchar_t* third  = L"Third string";
 
-static void word_list_init_test(void** state) {
+static void word_list_init_test(void** state)
+{
     struct word_list l;
     word_list_init(&l);
     assert_int_equal(word_list_size(&l), 0);
+    assert_null(l.first);
+    assert_null(l.last);
     word_list_done(&l);
 }
 
-static void word_list_add_test(void** state) {
+static void word_list_add_test(void** state)
+{
     struct word_list l;
     word_list_init(&l);
     word_list_add(&l, test);
     assert_int_equal(word_list_size(&l), 1);
+    assert_non_null(l.first);
+    assert_non_null(l.last);
     assert_true(wcscmp(test, word_list_get(&l)[0]) == 0);
     word_list_done(&l);
 }
 
 
-static int word_list_setup(void **state) {
+static int word_list_setup(void **state)
+{
     struct word_list *l = malloc(sizeof(struct word_list));
-    if (!l) 
+    if (!l)
         return -1;
     word_list_init(l);
     word_list_add(l, first);
@@ -38,21 +45,24 @@ static int word_list_setup(void **state) {
     *state = l;
     return 0;
 }
-static int word_list_teardown(void **state) {
+static int word_list_teardown(void **state)
+{
     struct word_list *l = *state;
     word_list_done(l);
     free(l);
     return 0;
 }
 
-static void word_list_get_test(void** state) {
+static void word_list_get_test(void** state)
+{
     struct word_list *l = *state;
     assert_true(wcscmp(first, word_list_get(l)[0]) == 0);
     assert_true(wcscmp(second, word_list_get(l)[1]) == 0);
     assert_true(wcscmp(third, word_list_get(l)[2]) == 0);
 }
 
-static void word_list_repeat_test(void** state) {
+static void word_list_repeat_test(void** state)
+{
     struct word_list *l = *state;
     word_list_add(l, third);
     assert_int_equal(word_list_size(l), 4);
@@ -60,8 +70,10 @@ static void word_list_repeat_test(void** state) {
 }
 
 
-int main(void) {
-    const struct CMUnitTest tests[] = {
+int main(void)
+{
+    const struct CMUnitTest tests[] =
+    {
         cmocka_unit_test(word_list_init_test),
         cmocka_unit_test(word_list_add_test),
         cmocka_unit_test_setup_teardown(word_list_get_test, word_list_setup, word_list_teardown),
