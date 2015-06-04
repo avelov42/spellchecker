@@ -11,28 +11,10 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
-
-#define UNIT_TESTING
-
-#ifdef UNIT_TESTING
-int example_test_fprintf(FILE* const file, const char *format, ...)
-{
-    printf("example_test_fprintf call!\n");
-    return 0;
-}
-
-int example_test_printf(const char *format, ...)
-{
-    printf("example_test_printf call!\n");
-    return 0;
-}
-#endif //UNIT_TESTING
-
-//to stoi we wlasciwym miejscu i nie powinno sie stad ruszac
 #include "word_list.h"
 
-#define PRINT_ERRORS
 
+#define PRINT_ERRORS
 #ifdef PRINT_ERRORS
 static void _error(int line, const char* func)
 {
@@ -45,12 +27,7 @@ static void _error(int line, const char* func)
 #define mem_err() return NULL
 #endif // PRINT_ERRORS
 
-void word_list_init(struct word_list *list)
-{
-    list->word_count = 0;
-    list->first = NULL;
-    list->last = NULL;
-}
+/* FUNKCJE POMOCNICZE */
 
 /**
  * @brief Tworzy węzeł, kopiuje do niego word.
@@ -86,15 +63,48 @@ static void delete_word_node(struct word_node* node)
     free(node);
 }
 
+static int wcscomparator(const void* p1, const void* p2)
+{
+    return wcscmp(*(const wchar_t**) p1, *(const wchar_t**) p2);
+}
+
+/* FUNKCJE INTERFEJSU */
+
+/**
+  Inicjuje istniejącą listę słów na pustą.
+  @param[in,out] *list Lista słów.
+  */
+void word_list_init(struct word_list *list)
+{
+    assert(list != NULL);
+    list->word_count = 0;
+    list->first = NULL;
+    list->last = NULL;
+}
+
+/**
+  Zwalnia pamięć zajętą przez dodawanie słów, nie zwalnia samej pamięci.
+  @param[in,out] *list Lista słów.
+  */
 void word_list_done(struct word_list *list)
 {
     assert(list != NULL);
-    delete_word_node(list->first);
+    if(list->first != NULL)
+        delete_word_node(list->first);
+    list->first = NULL;
+    list->last = NULL;
 }
 
+/**
+  Dodaje słowo do listy.
+  @param[in,out] list Lista słów.
+  @param[in] word Dodawane słowo.
+  @return #WORD_LIST_ADDED lub #WORD_LIST_ERROR
+  */
 int word_list_add(struct word_list *list, const wchar_t *word)
 {
     assert((list->first != NULL && list->last != NULL) || (list->first == NULL && list->last == NULL));
+    assert(word != NULL);
     if(list->first == NULL)
     {
 
@@ -117,11 +127,11 @@ int word_list_add(struct word_list *list, const wchar_t *word)
     return WORD_LIST_ADDED;
 }
 
-static int wcscomparator(const void* p1, const void* p2)
-{
-    return wcscmp(*(const wchar_t**) p1, *(const wchar_t**) p2);
-}
-
+/**
+  Zwraca tablicę słów w liście.
+  @param[in] list Lista słów.
+  @return Tablica słów.
+  */
 const wchar_t* const* word_list_get(const struct word_list* list)
 {
     if(word_list_size(list) == 0)
@@ -141,9 +151,16 @@ const wchar_t* const* word_list_get(const struct word_list* list)
         i++;
     }
     assert(i == word_list_size(list));
-    qsort((void*)ret, i, sizeof(wchar_t*), wcscomparator);
+    qsort((void*) ret, i, sizeof(wchar_t*), wcscomparator);
     return (const wchar_t* const*) ret;
 }
 
-
-/**@}*/
+/**
+  Zwraca liczę słów w liście.
+  @param[in] list Lista słów.
+  @return Liczba słów w liście.
+  */
+size_t word_list_size(const struct word_list* list)
+{
+    return list->word_count;
+}

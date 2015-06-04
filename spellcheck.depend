@@ -14,7 +14,7 @@
 	<stdio.h>
 	<wchar.h>
 
-1433418047 /home/ryba/workspace/spellcheck/src/dictionary/word_list.h
+1433430021 /home/ryba/workspace/spellcheck/src/dictionary/word_list.h
 	<wchar.h>
 
 1433414088 source:/home/ryba/workspace/spellcheck/src/dictionary/dictionary.c
@@ -40,14 +40,14 @@
 	<assert.h>
 	"trie.h"
 
-1433428260 source:/home/ryba/workspace/spellcheck/src/dictionary/word_list.c
+1433431293 source:/home/ryba/workspace/spellcheck/src/dictionary/word_list.c
 	<stdlib.h>
 	<stdio.h>
 	<assert.h>
 	<string.h>
 	"word_list.h"
 
-1433427688 source:/home/ryba/workspace/spellcheck/src/dictionary/word_list_test.c
+1433428309 source:/home/ryba/workspace/spellcheck/src/dictionary/word_list_test.c
 	<stdarg.h>
 	<stddef.h>
 	<setjmp.h>
@@ -56,13 +56,16 @@
 	<cmocka.h>
 	"word_list.h"
 
-1433417900 source:/home/ryba/workspace/spellcheck/src/dict-check/dict-check.c
+1433435352 source:/home/ryba/workspace/spellcheck/src/dict-check/dict-check.c
 	"../dictionary/word_list.h"
 	<assert.h>
-	<wchar.h>
 	<stdlib.h>
 	"../dictionary/word_list.h"
 	<string.h>
+	<stdio.h>
+	<wchar.h>
+	<locale.h>
+	<stdbool.h>
 
 1433089074 /home/ryba/workspace/spellcheck/src/dictionary/signCounter.h
 
