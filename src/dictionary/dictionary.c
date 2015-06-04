@@ -10,8 +10,7 @@
 
 #include "dictionary.h"
 #include "trie.h"
-#include "../conf.h"
-#include "signCounter.h"
+//#include "conf.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -171,15 +170,6 @@ struct dictionary* dictionary_load(FILE* stream)
     fread(ret->alphabet, sizeof(wchar_t), size, stream);
 
     return ret;
-}
-
-static wchar_t* insertLetter(wchar_t* word, wchar_t letter, int position)
-{
-    int wordlen = wcslen(word);
-    wchar_t* ret = malloc(wordlen + 1); //1 na wstawiona litere, drugi na \0
-    memcpy(ret, word, position);
-    ret[position] = word;
-    memcpy(ret, &word[position+1], wordlen-position);
 }
 
 

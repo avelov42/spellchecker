@@ -1,5 +1,9 @@
 /** @file
     Interfejs listy słów.
+    <p>
+    W pliku jest pewien subtelny problem. Mianowicie dopuszcza się
+    tworzenie listy na stosie (w przeciwieństwie do wszystkich innych modułów),
+    co sprawia, że nie word_list_done nie może zwalniać listy (bo free wywołane na stosie to UB)
 
     @ingroup dictionary
     @author Jakub Pawlewicz <pan@mimuw.edu.pl>
@@ -16,8 +20,7 @@
 #define WORD_LIST_ADDED (1)
 
 /**
- Pomocnicza struktura reprezentująca pojedynczy
- węzeł w liście.
+ Pomocnicza struktura reprezentująca pojedynczy węzeł w liście.
  */
 struct word_node
 {
@@ -26,27 +29,28 @@ struct word_node
 };
 
 /**
-  Lista przechowująca słowa.
+  Jednokierunkowa lista przechowująca słowa.
   Należy używać funkcji operujących na strukturze,
   gdyż jej implementacja może się zmienić.
   */
 struct word_list
 {
-
-    size_t word_count; ///<Licznik słów w liście, dla implementacji size i get
-    //struct word_node* current; ///<Wskaznik na aktualnie przegladany element
-    struct word_node* first; ///<Początek listy
-    struct word_node* last; ///<Koniec listy, dla szybkiego dodawnia.
+    size_t word_count;
+    struct word_node* first;
+    struct word_node* last;
 };
 
 /**
-  Inicjuje listę słów.
+  Inicjuje istniejącą listę słów na pustą.
+  <strong>
+  W przypadku użycia na liście już istniejącej usuwa jej zawartość.
+  </strong>
   @param[in,out] *list Lista słów.
   */
 void word_list_init(struct word_list* list);
 
 /**
-  Destrukcja listy słów.
+  Zwalnia pamięć zajętą przez dodawanie słów, nie zwalnia samej pamięci.
   @param[in,out] *list Lista słów.
   */
 void word_list_done(struct word_list* list);

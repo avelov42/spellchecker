@@ -1,0 +1,2 @@
+/usr/bin/ar cr libword_list.a  CMakeFiles/word_list.dir/word_list.c.o
+/usr/bin/ranlib libword_list.a

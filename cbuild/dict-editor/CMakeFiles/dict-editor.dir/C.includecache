@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ryba/workspace/spellcheck/src/dict-editor/dict-editor.c
+../dictionary/dictionary.h
+/home/ryba/workspace/spellcheck/src/dictionary/dictionary.h
+assert.h
+-
+locale.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+wctype.h
+-
+
+/home/ryba/workspace/spellcheck/src/dictionary/dictionary.h
+word_list.h
+/home/ryba/workspace/spellcheck/src/dictionary/word_list.h
+stdbool.h
+-
+stdio.h
+-
+wchar.h
+-
+
+/home/ryba/workspace/spellcheck/src/dictionary/word_list.h
+wchar.h
+-
+

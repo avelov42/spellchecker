@@ -1,7 +1,14 @@
 # dodajemy bibliotekę dictionary, stworzoną na podstawie pliku dictionary.c
 # biblioteka będzie dołączana statycznie (czyli przez linkowanie pliku .o)
 
+add_library (trie trie.c)
+add_library (word_list word_list.c)
 add_library (dictionary dictionary.c word_list.c)
+
+target_link_libraries (dictionary word_list)
+target_link_libraries (dictionary trie)
+#w przyszłości dodam tu sortedVector do dictionary i trie
+
 
 
 if (CMOCKA)
@@ -14,3 +21,4 @@ if (CMOCKA)
     # wreszcie deklarujemy, że to test
     add_test (word_list_unit_test word_list_test)
 endif (CMOCKA)
+

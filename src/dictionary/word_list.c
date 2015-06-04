@@ -11,20 +11,33 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+
+#define UNIT_TESTING
+
+#ifdef UNIT_TESTING
+int example_test_fprintf(FILE* const file, const char *format, ...)
+{
+    printf("example_test_fprintf call!\n");
+    return 0;
+}
+
+int example_test_printf(const char *format, ...)
+{
+    printf("example_test_printf call!\n");
+    return 0;
+}
+#endif //UNIT_TESTING
+
+//to stoi we wlasciwym miejscu i nie powinno sie stad ruszac
 #include "word_list.h"
 
 #define PRINT_ERRORS
 
-/** @name Elementy interfejsu
-   @{
- */
-
+#ifdef PRINT_ERRORS
 static void _error(int line, const char* func)
 {
     fprintf(stderr, "Error at line %d in function %s in module word_list\n", line, func);
 }
-
-#ifdef PRINT_ERRORS
 #define error()    {_error(__LINE__, __func__);return WORD_LIST_ERROR;}
 #define mem_err()  {_error(__LINE__, __func__);return NULL;}
 #else
@@ -46,26 +59,27 @@ void word_list_init(struct word_list *list)
  * <p>
  * <strong> Ustawia pole next na NULL </strong>
  */
-static struct word_node* add_node(const wchar_t* word)
+static struct word_node* new_node(const wchar_t* word)
 {
     assert(word != NULL);
+    int wlen = wcslen(word) + 1; //1 na \0
 
     struct word_node* ret = malloc(sizeof(struct word_node));
     if(ret == NULL) mem_err();
 
-    int wlen = wcslen(word) + 1; //1 na \0
+    ret->next = NULL;
     ret->word = malloc(sizeof(wchar_t) * wlen);
     if(ret->word == NULL) mem_err();
 
     memcpy(ret->word, word, sizeof(wchar_t) * wlen);
 
-    assert(ret->word[wlen-1] == 0);
-    ret->next = NULL;
+    assert(ret->word[wlen-1] == 0); //ostatni znak jest zerem
     return ret;
 }
 
 static void delete_word_node(struct word_node* node)
 {
+    assert(node != NULL);
     if(node->next != NULL)
         delete_word_node(node->next);
     free(node->word);
@@ -74,8 +88,8 @@ static void delete_word_node(struct word_node* node)
 
 void word_list_done(struct word_list *list)
 {
+    assert(list != NULL);
     delete_word_node(list->first);
-    word_list_init(list);
 }
 
 int word_list_add(struct word_list *list, const wchar_t *word)
@@ -84,7 +98,7 @@ int word_list_add(struct word_list *list, const wchar_t *word)
     if(list->first == NULL)
     {
 
-        list->first = add_node(word);
+        list->first = new_node(word);
         if(list->first == NULL)
             error();
 
@@ -94,7 +108,7 @@ int word_list_add(struct word_list *list, const wchar_t *word)
     }
     else //list->first != NULL
     {
-        list->last->next = add_node(word);
+        list->last->next = new_node(word);
         if(list->last->next == NULL)
             error();
         list->last = list->last->next;
@@ -105,7 +119,7 @@ int word_list_add(struct word_list *list, const wchar_t *word)
 
 static int wcscomparator(const void* p1, const void* p2)
 {
-    return wcscmp(*(const wchar_t*) p1, *(const wchar_t*) p2);
+    return wcscmp(*(const wchar_t**) p1, *(const wchar_t**) p2);
 }
 
 const wchar_t* const* word_list_get(const struct word_list* list)
@@ -126,7 +140,6 @@ const wchar_t* const* word_list_get(const struct word_list* list)
         current = current->next;
         i++;
     }
-    ///DOPISAC SORTOWANIE
     assert(i == word_list_size(list));
     qsort((void*)ret, i, sizeof(wchar_t*), wcscomparator);
     return (const wchar_t* const*) ret;
