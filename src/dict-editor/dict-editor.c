@@ -28,7 +28,8 @@
 /** Dostępne polecenia.
     Odpowiadające komendy w tablicy @ref commands
  */
-enum Command {
+enum Command
+{
     INSERT,
     DELETE,
     FIND,
@@ -37,7 +38,8 @@ enum Command {
     LOAD,
     QUIT,
     CLEAR,
-    COMMANDS_COUNT };
+    COMMANDS_COUNT
+};
 
 
 /** Komendy wywołujące pocelnia.
@@ -73,7 +75,8 @@ static const char *commands[] =
   */
 void skip_line()
 {
-    if (scanf("%*[^\n]\n") < 0) {
+    if (scanf("%*[^\n]\n") < 0)
+    {
         if (ferror(stdin))
         {
             fprintf(stderr, "Failed to read line\n");
@@ -128,41 +131,41 @@ static int dict_command(struct dictionary **dict, enum Command c)
     }
     switch (c)
     {
-        case INSERT:
-            if (dictionary_insert(*dict, word))
-                printf("inserted: %ls\n", word);
-            else
-                return ignored();
-            break;
-        case DELETE:
-            if (dictionary_delete(*dict, word))
-                printf("deleted: %ls\n", word);
-            else
-                return ignored();
-            break;
-        case FIND:
-            if (dictionary_find(*dict, word))
-                printf("found: %ls\n", word);
-            else
-                printf("not found: %ls\n", word);
-            break;
-        case HINTS:
-            {
-                struct word_list list;
-                dictionary_hints(*dict, word, &list);
-                const wchar_t * const *a = word_list_get(&list);
-                for (size_t i = 0; i < word_list_size(&list); ++i)
-                {
-                    if (i)
-                        printf(" ");
-                    printf("%ls", a[i]);
-                }
-                printf("\n");
-                word_list_done(&list);
-                break;
-            }
-        default:
-            assert(false);
+    case INSERT:
+        if (dictionary_insert(*dict, word))
+            printf("inserted: %ls\n", word);
+        else
+            return ignored();
+        break;
+    case DELETE:
+        if (dictionary_delete(*dict, word))
+            printf("deleted: %ls\n", word);
+        else
+            return ignored();
+        break;
+    case FIND:
+        if (dictionary_find(*dict, word))
+            printf("found: %ls\n", word);
+        else
+            printf("not found: %ls\n", word);
+        break;
+    case HINTS:
+    {
+        struct word_list list;
+        dictionary_hints(*dict, word, &list);
+        wchar_t **a = word_list_get(&list);
+        for (size_t i = 0; i < word_list_size(&list); ++i)
+        {
+            if (i)
+                printf(" ");
+            printf("%ls", a[i]);
+        }
+        printf("\n");
+        word_list_done(&list);
+        break;
+    }
+    default:
+        assert(false);
     }
     skip_line();
     return 1;
@@ -184,35 +187,35 @@ static int file_command(struct dictionary **dict, enum Command c)
     }
     switch (c)
     {
-        case SAVE:
-            {
-                FILE *f = fopen(filename, "w");
-                if (!f || dictionary_save(*dict, f))
-                {
-                    fprintf(stderr, "Failed to save dictionary\n");
-                    exit(1);
-                }
-                fclose(f);
-                printf("dictionary saved in file %s\n", filename);
-                break;
-            }
-        case LOAD:
-            {
-                FILE *f = fopen(filename, "r");
-                struct dictionary *new_dict;
-                if (!f || !(new_dict = dictionary_load(f)))
-                {
-                    fprintf(stderr, "Failed to load dictionary\n");
-                    exit(1);
-                }
-                fclose(f);
-                printf("dictionary loaded from file %s\n", filename);
-                dictionary_done(*dict);
-                *dict = new_dict;
-                break;
-            }
-        default:
-            assert(false);
+    case SAVE:
+    {
+        FILE *f = fopen(filename, "w");
+        if (!f || dictionary_save(*dict, f))
+        {
+            fprintf(stderr, "Failed to save dictionary\n");
+            exit(1);
+        }
+        fclose(f);
+        printf("dictionary saved in file %s\n", filename);
+        break;
+    }
+    case LOAD:
+    {
+        FILE *f = fopen(filename, "r");
+        struct dictionary *new_dict;
+        if (!f || !(new_dict = dictionary_load(f)))
+        {
+            fprintf(stderr, "Failed to load dictionary\n");
+            exit(1);
+        }
+        fclose(f);
+        printf("dictionary loaded from file %s\n", filename);
+        dictionary_done(*dict);
+        *dict = new_dict;
+        break;
+    }
+    default:
+        assert(false);
     }
     skip_line();
     return 1;
@@ -273,7 +276,8 @@ int main(void)
 {
     setlocale(LC_ALL, "pl_PL.UTF-8");
     struct dictionary *dict = dictionary_new();
-    do {} while (try_process_command(&dict));
+    do {}
+    while (try_process_command(&dict));
     dictionary_done(dict);
     return 0;
 }

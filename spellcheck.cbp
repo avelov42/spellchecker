@@ -37,9 +37,6 @@
 		<Unit filename="src/conf.h.in" />
 		<Unit filename="src/dict-check/dict-check.c">
 			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="src/dict-editor/dict-editor.c">
 			<Option compilerVar="CC" />
@@ -51,6 +48,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/dictionary/dictionary.h" />
+		<Unit filename="src/dictionary/testen.c">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="src/dictionary/trie.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -59,9 +62,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/dictionary/word_list.h" />
-		<Unit filename="src/dictionary/word_list_test.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="tests/dict-editor/test.sh" />
 		<Unit filename="tests/dict-editor/test0.in" />
 		<Unit filename="tests/dict-editor/test0.out" />

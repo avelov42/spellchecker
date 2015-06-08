@@ -6,8 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/ryba/workspace/spellcheck/src/dictionary/utils.h
-
 /home/ryba/workspace/spellcheck/src/dictionary/word_list.c
 stdlib.h
 -
@@ -17,8 +15,6 @@ assert.h
 -
 string.h
 -
-utils.h
-/home/ryba/workspace/spellcheck/src/dictionary/utils.h
 word_list.h
 /home/ryba/workspace/spellcheck/src/dictionary/word_list.h
 

@@ -161,19 +161,6 @@ word_list/fast:
 .PHONY : word_list/fast
 
 #=============================================================================
-# Target rules for targets named word_list_test
-
-# Build rule for target.
-word_list_test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 word_list_test
-.PHONY : word_list_test
-
-# fast build rule for target.
-word_list_test/fast:
-	$(MAKE) -f dictionary/CMakeFiles/word_list_test.dir/build.make dictionary/CMakeFiles/word_list_test.dir/build
-.PHONY : word_list_test/fast
-
-#=============================================================================
 # Target rules for targets named dict-editor
 
 # Build rule for target.
@@ -185,6 +172,19 @@ dict-editor: cmake_check_build_system
 dict-editor/fast:
 	$(MAKE) -f dict-editor/CMakeFiles/dict-editor.dir/build.make dict-editor/CMakeFiles/dict-editor.dir/build
 .PHONY : dict-editor/fast
+
+#=============================================================================
+# Target rules for targets named dict-check
+
+# Build rule for target.
+dict-check: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 dict-check
+.PHONY : dict-check
+
+# fast build rule for target.
+dict-check/fast:
+	$(MAKE) -f dict-check/CMakeFiles/dict-check.dir/build.make dict-check/CMakeFiles/dict-check.dir/build
+.PHONY : dict-check/fast
 
 # Help Target
 help:
@@ -199,8 +199,8 @@ help:
 	@echo "... dictionary"
 	@echo "... trie"
 	@echo "... word_list"
-	@echo "... word_list_test"
 	@echo "... dict-editor"
+	@echo "... dict-check"
 .PHONY : help
 
 

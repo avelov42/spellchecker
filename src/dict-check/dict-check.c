@@ -1,128 +1,126 @@
-
-#include "../dictionary/word_list.h"
-#include <assert.h>
-
-#include <stdlib.h>
-#include "../dictionary/word_list.h"
-#include <string.h>
-#include <stdio.h>
-#include <wchar.h>
-#include <locale.h>
+///SORTOWANIE W LISCIE POWINNO SIE ODBYWAC PO WCSCOLL
 #include <stdbool.h>
+#include <wchar.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <locale.h>
+#include "../dictionary/dictionary.h"
+#include "../dictionary/word_list.h"
+#include "wctype.h"
 
-//poki co jest to plik z testami
 
-static void list_manual_test(void)
+struct dictionary* dict;
+int line = 1;
+int column = 1;
+int wordLine;
+int wordColumn;
+
+#define SINGLE_WORD_MAX_LENGTH 1024
+
+/**
+ * @brief Wczytuje słowo lub kawałek śmieci.
+ * @param[out] dest - tablica, w której owo wczytane coś jest składowane
+ * @param[out] isWord - true, jeżeli składowane coś zostało rozpoznane jako słowo
+ * @return False gdy napotkano EOF
+ */
+bool readIt(wchar_t* dest, bool* isWord)
 {
-    wprintf(L"***STARTED MANUAL TEST***\n");
-    wprintf(L"Testing list..\n");
-    struct word_list l;
-    word_list_init(&l);
-    assert(l.first == NULL);
-    assert(l.last == NULL);
-    assert(l.word_count == 0);
-    wprintf(L"Init done..\n");
-
-    wprintf(L"Removing empty..\n");
-    word_list_done(&l);
-    wprintf(L"Removing done..\n");
-
-    wchar_t* wempty = L"";
-    wchar_t* wone = L"ź";
-    wchar_t* wstr = L"Zażółć gęślą jaźń";
-
-    wprintf(L"Testing adding");
-    word_list_init(&l);
-
-    word_list_add(&l, wempty);
-    assert(word_list_size(&l) == 1);
-
-    word_list_add(&l, wone);
-    word_list_add(&l, wstr);
-
-    assert(word_list_size(&l) == 3);
-
-    wprintf(L"Adding done..\n");
-    wprintf(L"Testing get..\n");
-    wchar_t** tab = word_list_get(&l);
-
-    assert(wcscmp(tab[0], tab[1]) <= 0);
-    assert(wcscmp(tab[1], tab[2]) <= 0);
-
-    wprintf(L"Get test done?..\n");
-    wprintf(L"Deleting..\n");
-    word_list_done(&l);
-    assert(l.first == l.last && l.first == NULL);
-    wprintf(L"Everything to be ok! ***\n\n");
-}
-
-#define MAX_WORD_LENGTH 120
-wchar_t* getRandomWord(void)
-{
-    int len = rand()%(MAX_WORD_LENGTH+1);
-    wchar_t* ret = malloc(sizeof(wchar_t) * (len+1));
-    ret[len] = 0;
-    for(int i = 0; i<len; i++)
-        ret[i] = rand()%90+ 32;
-    return ret;
-}
-
-#define NUMBER_OF_TESTS 200000
-#define VERBOSE false
-static void list_auto_test(void)
-{
-    wprintf(L"*** STARTED AUTOMATIC TEST *** \n");
-    wchar_t* words[NUMBER_OF_TESTS];
-    for(int i = 0; i<NUMBER_OF_TESTS; i++)
-        words[i] = getRandomWord();
-    wprintf(L"%d words generated: \n", NUMBER_OF_TESTS);
-    if(VERBOSE)
+    int it = 0;
+    bool currentState = false;
+    wchar_t in;
+    while(true)
     {
-        for(int i = 0; i<NUMBER_OF_TESTS; i++)
-            wprintf(L"%ls (%d)\n", words[i], wcslen(words[i]));
+        in = getwc(stdin);
+        column++;
+        if(in == EOF)
+        {
+            dest[it] = L'\0';
+            *isWord = currentState;
+            return false;
+        }
+
+        if(in == L'\n')
+            line++;
+        if(it == 0)
+            currentState = iswalpha(in); //sprawdzam, czy jest to słowo
+        if((iswalpha(in) != 0) != currentState) //zmienił się stan, kończymy
+        {
+            ungetwc(in, stdin);
+            column--;
+            if(in == L'\n');
+                line--;
+            dest[it] = L'\0';
+            *isWord = currentState;
+            return true; //alles gut
+        }
+        else //ten sam stan, czytamy sobie dalej
+            dest[it++] = in;
+
     }
-    struct word_list l;
-    word_list_init(&l);
-    wprintf(L"Adding to list..\n");
-    for(int i = 0; i<NUMBER_OF_TESTS; i++)
-        word_list_add(&l, words[i]);
-    assert(word_list_size(&l) == NUMBER_OF_TESTS);
-
-    wprintf(L"Getting array..\n");
-    wchar_t** tab = word_list_get(&l);
-    wprintf(L"Got words: \n");
-    if(VERBOSE)
-    {
-        for(int i = 0; i<NUMBER_OF_TESTS; i++)
-            wprintf(L"[%d] = %ls\n", i, tab[i]);
-    }
-    wprintf(L"Checking if sorted: \n");
-
-    for(int i = 0; i+1<NUMBER_OF_TESTS; i++)
-    {
-        assert(wcscmp(tab[i], tab[i+1]) <= 0 );
-        if(VERBOSE)wprintf(L"%d<=%d checked\n", i, i+1);
-    }
-
-
-    wprintf(L"Words seems to be sorted, so it's OK!\n");
-
-    wprintf(L"Deleting..\n");
-    word_list_done(&l);
-    assert(l.first == l.last && l.first == NULL);
-
 }
-
-
 
 int main(int argc, char** argv)
 {
+    argc = 3;
+    argv[1] = malloc(64);
+    argv[1] = "dupa2";
+    //argv[1] = malloc(64);
+    //argv[1] = "-v";
     setlocale(LC_ALL, "pl_PL.UTF-8");
-    list_manual_test();
-    list_auto_test();
+    char* dictName;
+    bool hints;
+    if(argc < 2)
+        return 1;
+    else
+    {
+        if(argv[1][0] == '-' && argv[1][1] == 'v')
+        {
+            hints = true;
+            if(argc != 3)
+                return 1;
+            dictName = argv[2];
+        }
+        else
+        {
+            dictName = argv[1];
+            if(argc == 3 && argv[2][0] == '-' && argv[2][1] == 'v') hints = true;
+        }
+
+
+
+    }
+    FILE* file = fopen(dictName, "r");
+    dict = dictionary_load(file);
+    if(dict == NULL)
+    {
+        fwprintf(stderr, L"Cannot load dictionary, ending..\n");
+        exit(EXIT_FAILURE);
+    }
+
+    wchar_t word[SINGLE_WORD_MAX_LENGTH];
+    bool isWord;
+    while(readIt(word, &isWord))
+    {
+        if(isWord)
+        {
+            if(dictionary_find(dict, word) != DICT_WORD_FOUND)
+            {
+                wprintf(L"#");
+                if(hints)
+                {
+                    struct word_list list;
+                    dictionary_hints(dict, word, &list);
+                    wchar_t** hintsTab = word_list_get(&list);
+                    int hlen = word_list_size(&list);
+                    wprintf(L"%d,%d", wordLine, wordColumn);
+                    for(int i = 0; i < hlen; i++)
+                        fwprintf(stderr, L"%ls ", hintsTab[i]);
+                }
+
+            }
+        }
+        wprintf(L"%ls", word);
+    }
+    wprintf(L"%ls", word);
+
 }
-
-
-
-
-

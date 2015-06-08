@@ -6,7 +6,6 @@ dictionary/CMakeFiles/dictionary.dir/dictionary.c.o: /home/ryba/workspace/spellc
 dictionary/CMakeFiles/dictionary.dir/dictionary.c.o: /home/ryba/workspace/spellcheck/src/dictionary/trie.h
 dictionary/CMakeFiles/dictionary.dir/dictionary.c.o: /home/ryba/workspace/spellcheck/src/dictionary/word_list.h
 
-dictionary/CMakeFiles/dictionary.dir/word_list.c.o: /home/ryba/workspace/spellcheck/src/dictionary/utils.h
 dictionary/CMakeFiles/dictionary.dir/word_list.c.o: /home/ryba/workspace/spellcheck/src/dictionary/word_list.c
 dictionary/CMakeFiles/dictionary.dir/word_list.c.o: /home/ryba/workspace/spellcheck/src/dictionary/word_list.h
 

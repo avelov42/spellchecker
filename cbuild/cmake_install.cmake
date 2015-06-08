@@ -36,6 +36,7 @@ IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   INCLUDE("/home/ryba/workspace/spellcheck/cbuild/dictionary/cmake_install.cmake")
   INCLUDE("/home/ryba/workspace/spellcheck/cbuild/dict-editor/cmake_install.cmake")
+  INCLUDE("/home/ryba/workspace/spellcheck/cbuild/dict-check/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

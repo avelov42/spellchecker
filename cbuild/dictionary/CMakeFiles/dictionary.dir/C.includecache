@@ -6,7 +6,35 @@
 
 #IncludeRegexTransform: 
 
-/home/ryba/workspace/spellcheck/src/dictionary/utils.h
+/home/ryba/workspace/spellcheck/src/dictionary/dictionary.c
+dictionary.h
+/home/ryba/workspace/spellcheck/src/dictionary/dictionary.h
+trie.h
+/home/ryba/workspace/spellcheck/src/dictionary/trie.h
+stdio.h
+-
+stdlib.h
+-
+assert.h
+-
+wchar.h
+-
+
+/home/ryba/workspace/spellcheck/src/dictionary/dictionary.h
+word_list.h
+/home/ryba/workspace/spellcheck/src/dictionary/word_list.h
+stdbool.h
+-
+stdio.h
+-
+wchar.h
+-
+
+/home/ryba/workspace/spellcheck/src/dictionary/trie.h
+stdbool.h
+-
+wchar.h
+-
 
 /home/ryba/workspace/spellcheck/src/dictionary/word_list.c
 stdlib.h
@@ -17,8 +45,6 @@ assert.h
 -
 string.h
 -
-utils.h
-/home/ryba/workspace/spellcheck/src/dictionary/utils.h
 word_list.h
 /home/ryba/workspace/spellcheck/src/dictionary/word_list.h
 

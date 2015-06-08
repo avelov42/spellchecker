@@ -12,6 +12,7 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "/home/ryba/workspace/spellcheck/src/CMakeLists.txt"
   "/home/ryba/workspace/spellcheck/src/Doxyfile.in"
   "/home/ryba/workspace/spellcheck/src/conf.h.in"
+  "/home/ryba/workspace/spellcheck/src/dict-check/CMakeLists.txt"
   "/home/ryba/workspace/spellcheck/src/dict-editor/CMakeLists.txt"
   "/home/ryba/workspace/spellcheck/src/dictionary/CMakeLists.txt"
   "/usr/share/cmake-2.8/Modules/CMakeCCompiler.cmake.in"
@@ -61,6 +62,7 @@ SET(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "dictionary/CMakeFiles/CMakeDirectoryInformation.cmake"
   "dict-editor/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "dict-check/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -69,6 +71,6 @@ SET(CMAKE_DEPEND_INFO_FILES
   "dictionary/CMakeFiles/dictionary.dir/DependInfo.cmake"
   "dictionary/CMakeFiles/trie.dir/DependInfo.cmake"
   "dictionary/CMakeFiles/word_list.dir/DependInfo.cmake"
-  "dictionary/CMakeFiles/word_list_test.dir/DependInfo.cmake"
   "dict-editor/CMakeFiles/dict-editor.dir/DependInfo.cmake"
+  "dict-check/CMakeFiles/dict-check.dir/DependInfo.cmake"
   )

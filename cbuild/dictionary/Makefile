@@ -150,20 +150,6 @@ word_list/fast:
 	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list.dir/build.make dictionary/CMakeFiles/word_list.dir/build
 .PHONY : word_list/fast
 
-# Convenience name for target.
-dictionary/CMakeFiles/word_list_test.dir/rule:
-	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f CMakeFiles/Makefile2 dictionary/CMakeFiles/word_list_test.dir/rule
-.PHONY : dictionary/CMakeFiles/word_list_test.dir/rule
-
-# Convenience name for target.
-word_list_test: dictionary/CMakeFiles/word_list_test.dir/rule
-.PHONY : word_list_test
-
-# fast build rule for target.
-word_list_test/fast:
-	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list_test.dir/build.make dictionary/CMakeFiles/word_list_test.dir/build
-.PHONY : word_list_test/fast
-
 dictionary.o: dictionary.c.o
 .PHONY : dictionary.o
 
@@ -219,7 +205,6 @@ word_list.o: word_list.c.o
 word_list.c.o:
 	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/dictionary.dir/build.make dictionary/CMakeFiles/dictionary.dir/word_list.c.o
 	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list.dir/build.make dictionary/CMakeFiles/word_list.dir/word_list.c.o
-	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list_test.dir/build.make dictionary/CMakeFiles/word_list_test.dir/word_list.c.o
 .PHONY : word_list.c.o
 
 word_list.i: word_list.c.i
@@ -229,7 +214,6 @@ word_list.i: word_list.c.i
 word_list.c.i:
 	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/dictionary.dir/build.make dictionary/CMakeFiles/dictionary.dir/word_list.c.i
 	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list.dir/build.make dictionary/CMakeFiles/word_list.dir/word_list.c.i
-	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list_test.dir/build.make dictionary/CMakeFiles/word_list_test.dir/word_list.c.i
 .PHONY : word_list.c.i
 
 word_list.s: word_list.c.s
@@ -239,32 +223,7 @@ word_list.s: word_list.c.s
 word_list.c.s:
 	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/dictionary.dir/build.make dictionary/CMakeFiles/dictionary.dir/word_list.c.s
 	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list.dir/build.make dictionary/CMakeFiles/word_list.dir/word_list.c.s
-	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list_test.dir/build.make dictionary/CMakeFiles/word_list_test.dir/word_list.c.s
 .PHONY : word_list.c.s
-
-word_list_test.o: word_list_test.c.o
-.PHONY : word_list_test.o
-
-# target to build an object file
-word_list_test.c.o:
-	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list_test.dir/build.make dictionary/CMakeFiles/word_list_test.dir/word_list_test.c.o
-.PHONY : word_list_test.c.o
-
-word_list_test.i: word_list_test.c.i
-.PHONY : word_list_test.i
-
-# target to preprocess a source file
-word_list_test.c.i:
-	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list_test.dir/build.make dictionary/CMakeFiles/word_list_test.dir/word_list_test.c.i
-.PHONY : word_list_test.c.i
-
-word_list_test.s: word_list_test.c.s
-.PHONY : word_list_test.s
-
-# target to generate assembly for a file
-word_list_test.c.s:
-	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/word_list_test.dir/build.make dictionary/CMakeFiles/word_list_test.dir/word_list_test.c.s
-.PHONY : word_list_test.c.s
 
 # Help Target
 help:
@@ -278,7 +237,6 @@ help:
 	@echo "... test"
 	@echo "... trie"
 	@echo "... word_list"
-	@echo "... word_list_test"
 	@echo "... dictionary.o"
 	@echo "... dictionary.i"
 	@echo "... dictionary.s"
@@ -288,9 +246,6 @@ help:
 	@echo "... word_list.o"
 	@echo "... word_list.i"
 	@echo "... word_list.s"
-	@echo "... word_list_test.o"
-	@echo "... word_list_test.i"
-	@echo "... word_list_test.s"
 .PHONY : help
 
 
