@@ -31,8 +31,6 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-std=c99" />
-			<Add option="-lcmocka" />
 		</Compiler>
 		<Unit filename="src/conf.h.in" />
 		<Unit filename="src/dict-check/dict-check.c">

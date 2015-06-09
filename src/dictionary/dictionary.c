@@ -17,8 +17,9 @@
 #include <wctype.h>
 #include <string.h>
 
-#define START_ALPHABET_SIZE 0
+#define START_ALPHABET_SIZE 8 ///< Początkowy rozmiar tablicy przechowującej tablicę
 
+/** @brief Strutkura przechowująca słownik */
 struct dictionary
 {
     Node* trie_root;
@@ -35,8 +36,8 @@ static void _error(int line, const char* func)
 }
 
 #ifdef DICT_PRINT_ERRORS
-#define error() {_error(__LINE__, __func__); return DICT_ERROR;}
-#define memError() {_error(__LINE__, __func__);return NULL;}
+#define error() {_error(__LINE__, __func__); return DICT_ERROR;} ///< Makro służące do szybkiej obsługi błędów
+#define memError() {_error(__LINE__, __func__);return NULL;} ///< Makro do obsługi błędów malloc'a
 #else
 #define error()
 #define memError()

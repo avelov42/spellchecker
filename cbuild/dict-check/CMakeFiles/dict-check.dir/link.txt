@@ -1,1 +1,0 @@
-/usr/bin/cc  -std=gnu99 -O3 -DNDEBUG    CMakeFiles/dict-check.dir/dict-check.c.o  -o dict-check -rdynamic ../dictionary/libword_list.a ../dictionary/libdictionary.a ../dictionary/libword_list.a ../dictionary/libtrie.a 

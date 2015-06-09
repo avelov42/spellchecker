@@ -3,7 +3,7 @@
 */
 
 /**
- * @file Testy word_list i trie
+ * @file testen.c Testy word_list i trie
  * @ingroup tests
  * @author Piotr Rybicki <pr360957@mimuw.edu.pl
  * Test składa się z testów ręcznych badających kilka miejsc potencjalnych błędów w word_list i w trie.

@@ -18,20 +18,20 @@
 #include <stdio.h>
 #include <wchar.h>
 
-#define DICT_WORD_INSERTED 1
-#define DICT_WORD_NOT_INSERTED 0
+#define DICT_WORD_INSERTED 1 ///< wartość return'a
+#define DICT_WORD_NOT_INSERTED 0 ///< wartość return'a
 
-#define DICT_WORD_DELETED 1
-#define DICT_WORD_NOT_DELETED 0
+#define DICT_WORD_DELETED 1 ///< wartość return'a
+#define DICT_WORD_NOT_DELETED 0 ///< wartość return'a
 
-#define DICT_WORD_FOUND 1
-#define DICT_WORD_NOT_FOUND 0
+#define DICT_WORD_FOUND 1 ///< wartość return'a
+#define DICT_WORD_NOT_FOUND 0 ///< wartość return'a
 
-#define DICT_SAVE_SUCCESS 0
-#define DICT_SAVE_ERROR (-1)
+#define DICT_SAVE_SUCCESS 0 ///< wartość return'a
+#define DICT_SAVE_ERROR (-1) ///< wartość return'a
 
-#define DICT_ERROR (-1)
-#define DICT_PRINT_ERRORS
+#define DICT_ERROR (-1) ///< wartość return'a
+#define DICT_PRINT_ERRORS ///< wartość return'a
 
 /**
   Struktura przechowująca słownik.

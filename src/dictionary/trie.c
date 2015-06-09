@@ -19,8 +19,8 @@
 #include <wctype.h>
 
 /* MIEJSCE NA MAKRODEFINICJE */
-#define TRIE_DEBUG_FUNTIONS
-#define TRIE_PRINT_ERRORS
+#define TRIE_DEBUG_FUNTIONS ///< Odblokowuje funkcje debugujące i poprawnościowe.
+#define TRIE_PRINT_ERRORS /// Włącza out błędów (pamięciowych).
 /* ************************* */
 
 #include <assert.h>
@@ -29,8 +29,8 @@
 /* STALE MAKRODEFINICJE */
 //czy tutaj nie powinno być >1?
 //implementation-defined behaviour
-#define TRIE_CHILDREN_ARRAY_START_SIZE 1
-#define TRIE_EMPTY_NODE_VALUE 0
+#define TRIE_CHILDREN_ARRAY_START_SIZE 1 ///< Początkowy rozmiar tablicy dzieci
+#define TRIE_EMPTY_NODE_VALUE 0 ///< Znak, który znajduje się w root-cie.
 /* ******************** */
 
 static Node* addChild(Node* node, wchar_t sign, bool isWordArg, bool* wasAdded);
@@ -54,15 +54,19 @@ static Node** getPartOfArray(const Node** src, int begin, int end, bool* success
 static int saveNodeToFileRec(const Node* node, FILE* file);
 static Node* loadNodeFromFileRec(Node* parent, FILE* file);
 
+/**@brief Pomocnicza funkcja wypisująca info o błędzie
+ * @param[in] func - funkcja, w której wystąpił błąd
+ * @param[in] line - linia, w której wystąpił błąd
+ */
 static void _error(const char* func, int line)
 {
     //fprintf(stderr, "**************************************************************************\n");
     fprintf(stderr, "Exception at line %d in %s() in module trie\n", line, func);
 }
 #ifdef TRIE_PRINT_ERRORS
-#define error() _error(__func__, __LINE__)
+#define error() _error(__func__, __LINE__) ///< Makro obsługujące błędy
 #else
-#define error() ;
+#define error() ; ///< Makro, które olewa błędy, kiedy nie chcemy ich obsługiwać
 #endif // TRIE_PRINT_ERRORS
 
 
@@ -575,7 +579,6 @@ static int arraySizeFunction(const Node* node)
  * @param[out] *success - flaga powodzenia. False gdy błąd alokacji.
  * @return Zwraca wskaźnik do kopii fragmentu tablicy lub null, w przypadku gdy zadany fragment
  * ma ujemną długość.
- * @todo src może być typu void*
  ***********************************************/
 static Node** getPartOfArray(const Node** src, int begin, int end, bool* success)
 {
@@ -641,6 +644,9 @@ static int resizeChildrenArray(Node* node)
 #ifdef TRIE_DEBUG_FUNTIONS
 
 
+/**@brief Rysuje drzewo w konsoli
+ * @param[in] root - korzeń drzewa do narysowania
+ */
 void triePrint(const Node* root)
 {
     assert(root != NULL);

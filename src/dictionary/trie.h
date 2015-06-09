@@ -2,13 +2,15 @@
 #define TRIE_H_INCLUDED
 
 /********************************************//**
- * @file Plik nagłówkowy dla modułu trie.
+ * @file trie.h Plik nagłówkowy.
  * @ingroup trie
  * @author Piotr Rybicki <pr360957@students.mimuw.edu.pl>
  ***********************************************/
 
 #include <stdbool.h>
 #include <wchar.h>
+
+#define TRIE_DEBUG_FUNCTIONS
 
 #define TRIE_SUCCESS 42
 #define TRIE_ERROR (-1) ///<Nie ważne jaki. #TRIE_PRINT_ERRORS wyświetli tę informację na stderr.
@@ -88,7 +90,6 @@ int trieFindWord(const Node* root, const wchar_t* word);
  * @param[in] *root - Drzewo do zapisania.
  * @param[in] *file - wskaźnik do strumienia docelowego
  * @return #TRIE_SUCCESS. Ta funkcja nie zwraca komunikatu o błędach.
- * @todo Dodac obsluge bledow tu i w load.
  ***********************************************/
 int trieSaveToFile(const Node* root, FILE* file);
 
@@ -101,7 +102,7 @@ int trieSaveToFile(const Node* root, FILE* file);
  ***********************************************/
 int trieDeleteTrie(Node* root);
 
-#ifdef TRIE_DEBUG_FUNTIONS
+#ifdef TRIE_DEBUG_FUNCTIONS
 /********************************************//**
  * @brief Wyświetla podane drzewo w konsoli.
  *
