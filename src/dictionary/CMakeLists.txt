@@ -4,7 +4,9 @@
 add_library (trie trie.c)
 add_library (word_list word_list.c)
 add_library (dictionary dictionary.c word_list.c)
+add_executable (testen testen.c)
 
+target_link_libraries (testen word_list trie)
 target_link_libraries (dictionary word_list)
 target_link_libraries (dictionary trie)
 

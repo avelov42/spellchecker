@@ -69,6 +69,7 @@ SET(CMAKE_MAKEFILE_PRODUCTS
 SET(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/doc.dir/DependInfo.cmake"
   "dictionary/CMakeFiles/dictionary.dir/DependInfo.cmake"
+  "dictionary/CMakeFiles/testen.dir/DependInfo.cmake"
   "dictionary/CMakeFiles/trie.dir/DependInfo.cmake"
   "dictionary/CMakeFiles/word_list.dir/DependInfo.cmake"
   "dict-editor/CMakeFiles/dict-editor.dir/DependInfo.cmake"

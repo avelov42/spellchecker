@@ -67,16 +67,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # The main all target
 all: cmake_check_build_system
 	cd /home/ryba/workspace/spellcheck/cbuild && $(CMAKE_COMMAND) -E cmake_progress_start /home/ryba/workspace/spellcheck/cbuild/CMakeFiles /home/ryba/workspace/spellcheck/cbuild/dictionary/CMakeFiles/progress.marks
@@ -121,6 +111,20 @@ dictionary: dictionary/CMakeFiles/dictionary.dir/rule
 dictionary/fast:
 	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/dictionary.dir/build.make dictionary/CMakeFiles/dictionary.dir/build
 .PHONY : dictionary/fast
+
+# Convenience name for target.
+dictionary/CMakeFiles/testen.dir/rule:
+	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f CMakeFiles/Makefile2 dictionary/CMakeFiles/testen.dir/rule
+.PHONY : dictionary/CMakeFiles/testen.dir/rule
+
+# Convenience name for target.
+testen: dictionary/CMakeFiles/testen.dir/rule
+.PHONY : testen
+
+# fast build rule for target.
+testen/fast:
+	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/testen.dir/build.make dictionary/CMakeFiles/testen.dir/build
+.PHONY : testen/fast
 
 # Convenience name for target.
 dictionary/CMakeFiles/trie.dir/rule:
@@ -173,6 +177,30 @@ dictionary.s: dictionary.c.s
 dictionary.c.s:
 	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/dictionary.dir/build.make dictionary/CMakeFiles/dictionary.dir/dictionary.c.s
 .PHONY : dictionary.c.s
+
+testen.o: testen.c.o
+.PHONY : testen.o
+
+# target to build an object file
+testen.c.o:
+	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/testen.dir/build.make dictionary/CMakeFiles/testen.dir/testen.c.o
+.PHONY : testen.c.o
+
+testen.i: testen.c.i
+.PHONY : testen.i
+
+# target to preprocess a source file
+testen.c.i:
+	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/testen.dir/build.make dictionary/CMakeFiles/testen.dir/testen.c.i
+.PHONY : testen.c.i
+
+testen.s: testen.c.s
+.PHONY : testen.s
+
+# target to generate assembly for a file
+testen.c.s:
+	cd /home/ryba/workspace/spellcheck/cbuild && $(MAKE) -f dictionary/CMakeFiles/testen.dir/build.make dictionary/CMakeFiles/testen.dir/testen.c.s
+.PHONY : testen.c.s
 
 trie.o: trie.c.o
 .PHONY : trie.o
@@ -234,12 +262,15 @@ help:
 	@echo "... dictionary"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
+	@echo "... testen"
 	@echo "... trie"
 	@echo "... word_list"
 	@echo "... dictionary.o"
 	@echo "... dictionary.i"
 	@echo "... dictionary.s"
+	@echo "... testen.o"
+	@echo "... testen.i"
+	@echo "... testen.s"
 	@echo "... trie.o"
 	@echo "... trie.i"
 	@echo "... trie.s"

@@ -5,7 +5,6 @@
   @author Jakub Pawlewicz <pan@mimuw.edu.pl>
   @author Piotr Rybicki <pr360957@students.mimuw.edu.pl>
   @copyright Uniwerstet Warszawski
-  @todo Poprawić save, load.
  */
 
 #include "dictionary.h"
@@ -23,12 +22,13 @@
 struct dictionary
 {
     Node* trie_root;
-
     int letters_count;
     int array_size;
     wchar_t* alphabet;
 };
 
+/** @brief Pomocnicza funkcja dla makra wyświetlającego błędy.
+*/
 static void _error(int line, const char* func)
 {
     fprintf(stderr, "Error at line %d (module trie) in function %s()\n", line, func);
@@ -42,6 +42,13 @@ static void _error(int line, const char* func)
 #define memError()
 #endif // DICT_PRINT_ERRORS
 
+/**
+ * @brief Binary-search w alfabecie dict w poszukiwaniu sign.
+ * @param[in] dict - słownik, w który odbywa się bs.
+ * @param[in] sign - szukany znak
+ * @return Pozycja w alfabecie, na którym znajduje się sign, jeżeli faktycznie tam jest.
+ * Jeżeli w alfabecie dict nie ma znaku sign - zwracana jest pozycja, na której mógłby być.
+ */
 static int find_letter_in_alphabet(struct dictionary* dict, wchar_t sign)
 {
     assert(dict != NULL);
@@ -58,6 +65,11 @@ static int find_letter_in_alphabet(struct dictionary* dict, wchar_t sign)
     return l;
 }
 
+/**
+ * @brief Oblicza rozmiar dla tablicy przechowującej alfabet w słowniku.
+ * @param[in] dict - słownik, dla którego zostaje obliczony rozmiar tablicy
+ * @return Rozmiar tablicy, który gwarantuje pomieszczenie liczby dict->lettersCount znaków.
+ */
 static int array_size_function(struct dictionary* dict)
 {
     assert(dict != NULL);
@@ -75,7 +87,12 @@ static int array_size_function(struct dictionary* dict)
     return new_size;
 }
 
-
+/**
+ * @brief Dodaje znak do alfabetu w słowniku.
+ * @param[out] dict - słownik
+ * @param[in] sign - znak do wstawienia.
+ * @return True, jeżeli znak został wstawiony, false, jeżeli już się znajdował w alfabecie.
+ **/
 static bool add_letter_to_alphabet(struct dictionary* dict, wchar_t sign)
 {
     assert(dict != NULL);
@@ -107,7 +124,6 @@ static bool add_letter_to_alphabet(struct dictionary* dict, wchar_t sign)
         return true;
     }
 }
-
 
 struct dictionary* dictionary_new()
 {
@@ -181,9 +197,7 @@ int dictionary_delete(struct dictionary *dict, const wchar_t *word)
         free(lowWord);
         return DICT_WORD_NOT_DELETED;
     }
-
 }
-
 
 bool dictionary_find(const struct dictionary *dict, const wchar_t* word)
 {
@@ -246,7 +260,7 @@ struct dictionary* dictionary_load(FILE* file)
  * @param[in] pos - pozycja (znak), który będzie podmieniony
  * @param[in] letter - znak, który będzie wstawiony
  * @param[in] word_len - długość słowa word, bez '\0' (w celu zmniejszenia liczby obliczeń
- * @return Wskaźnik na nowe słowo
+ * @return Wskaźnik na nowe słowo, które należy zwolnić za pomocą free()
  */
 static wchar_t* replace_letter(const wchar_t* word, int pos, wchar_t letter, int word_len)
 {
@@ -271,7 +285,7 @@ static wchar_t* replace_letter(const wchar_t* word, int pos, wchar_t letter, int
  * @param[in] pos - pozycja, na którą będzie wstawiona litera letter
  * @param[in] letter - znak, który będzie wstawiony
  * @param[in] word_len - długość słowa word, bez '\0' (w celu zmniejszenia liczby obliczeń)
- * @return Wskaźnik na nowe słowo.
+ * @return Wskaźnik na nowe słowo, które należy zwolnić za pomocą free().
  */
 static wchar_t* insert_letter(const wchar_t* word, int pos, wchar_t letter, int word_len)
 {
@@ -290,6 +304,13 @@ static wchar_t* insert_letter(const wchar_t* word, int pos, wchar_t letter, int 
     return ret;
 }
 
+/**
+ * @brief Tworzy nowe słowo poprzez usunięcie jednego ze znaków słowa.
+ * @param[in] word - słowo wejściowe
+ * @param[in] pos - pozycja znaku do usunięcia, musi być mniejsza od długości słowa; 0 oznacza 1. znak.
+ * @param[in] word_len - długość słowa word, bez '\0' (w celu zmniejszenia liczby obliczeń)
+ * @return Wskaźnik na nowe słowo, które należy zwolnić za pomocą free()
+ */
 static wchar_t* remove_letter(const wchar_t* word, int pos, int word_len)
 {
     assert(word != NULL);
@@ -305,16 +326,6 @@ static wchar_t* remove_letter(const wchar_t* word, int pos, int word_len)
     return ret;
 }
 
-
-/** @brief Umieszcza w liście podpowiedzi słowa.
- * @param[in] dict - aktualny słownik
- * @param[in] word - słowo, dla którego szukane są podpowiedzi
- * @param[in,out] list - lista do zapisania podpowiedzi
- * <p>
- * <strong>
- * Lista może zawierać powtórzenia.
- * </strong>
- */
 void dictionary_hints(const struct dictionary *dict, const wchar_t* word,
                       struct word_list *list)
 {
@@ -360,7 +371,6 @@ void dictionary_hints(const struct dictionary *dict, const wchar_t* word,
     }
     //zrobimy cos brzydkiego :)
     free(lowWord);
-
     if(word_list_size(list) == 0)
         return;
 
@@ -379,9 +389,5 @@ void dictionary_hints(const struct dictionary *dict, const wchar_t* word,
         free(tab[i]);
     free(tab);
 
-    //zamienic slowa na male ;)
-    //generuj slowa przez replace, dodaj je do listy
-    //generuj slowa przez insert, dodaj je do listy
-    //generuj slowa przez delete, dodaj je do listy
 
 }

@@ -38,7 +38,6 @@
   */
 struct dictionary;
 
-
 /**
   Inicjalizacja słownika.
   Słownik ten należy zniszczyć za pomocą dictionary_done().

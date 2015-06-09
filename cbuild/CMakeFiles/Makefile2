@@ -88,12 +88,14 @@ clean: CMakeFiles/doc.dir/clean
 
 # Convenience name for "all" pass in the directory.
 dictionary/all: dictionary/CMakeFiles/dictionary.dir/all
+dictionary/all: dictionary/CMakeFiles/testen.dir/all
 dictionary/all: dictionary/CMakeFiles/trie.dir/all
 dictionary/all: dictionary/CMakeFiles/word_list.dir/all
 .PHONY : dictionary/all
 
 # Convenience name for "clean" pass in the directory.
 dictionary/clean: dictionary/CMakeFiles/dictionary.dir/clean
+dictionary/clean: dictionary/CMakeFiles/testen.dir/clean
 dictionary/clean: dictionary/CMakeFiles/trie.dir/clean
 dictionary/clean: dictionary/CMakeFiles/word_list.dir/clean
 .PHONY : dictionary/clean
@@ -106,8 +108,8 @@ dictionary/preinstall:
 # Target rules for target dictionary/CMakeFiles/dictionary.dir
 
 # All Build rule for target.
-dictionary/CMakeFiles/dictionary.dir/all: dictionary/CMakeFiles/word_list.dir/all
 dictionary/CMakeFiles/dictionary.dir/all: dictionary/CMakeFiles/trie.dir/all
+dictionary/CMakeFiles/dictionary.dir/all: dictionary/CMakeFiles/word_list.dir/all
 	$(MAKE) -f dictionary/CMakeFiles/dictionary.dir/build.make dictionary/CMakeFiles/dictionary.dir/depend
 	$(MAKE) -f dictionary/CMakeFiles/dictionary.dir/build.make dictionary/CMakeFiles/dictionary.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/ryba/workspace/spellcheck/cbuild/CMakeFiles  3 4
@@ -139,13 +141,49 @@ clean: dictionary/CMakeFiles/dictionary.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Target rules for target dictionary/CMakeFiles/testen.dir
+
+# All Build rule for target.
+dictionary/CMakeFiles/testen.dir/all: dictionary/CMakeFiles/trie.dir/all
+dictionary/CMakeFiles/testen.dir/all: dictionary/CMakeFiles/word_list.dir/all
+	$(MAKE) -f dictionary/CMakeFiles/testen.dir/build.make dictionary/CMakeFiles/testen.dir/depend
+	$(MAKE) -f dictionary/CMakeFiles/testen.dir/build.make dictionary/CMakeFiles/testen.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/ryba/workspace/spellcheck/cbuild/CMakeFiles  6
+	@echo "Built target testen"
+.PHONY : dictionary/CMakeFiles/testen.dir/all
+
+# Include target in all.
+all: dictionary/CMakeFiles/testen.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+dictionary/CMakeFiles/testen.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ryba/workspace/spellcheck/cbuild/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 dictionary/CMakeFiles/testen.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ryba/workspace/spellcheck/cbuild/CMakeFiles 0
+.PHONY : dictionary/CMakeFiles/testen.dir/rule
+
+# Convenience name for target.
+testen: dictionary/CMakeFiles/testen.dir/rule
+.PHONY : testen
+
+# clean rule for target.
+dictionary/CMakeFiles/testen.dir/clean:
+	$(MAKE) -f dictionary/CMakeFiles/testen.dir/build.make dictionary/CMakeFiles/testen.dir/clean
+.PHONY : dictionary/CMakeFiles/testen.dir/clean
+
+# clean rule for target.
+clean: dictionary/CMakeFiles/testen.dir/clean
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target dictionary/CMakeFiles/trie.dir
 
 # All Build rule for target.
 dictionary/CMakeFiles/trie.dir/all:
 	$(MAKE) -f dictionary/CMakeFiles/trie.dir/build.make dictionary/CMakeFiles/trie.dir/depend
 	$(MAKE) -f dictionary/CMakeFiles/trie.dir/build.make dictionary/CMakeFiles/trie.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/ryba/workspace/spellcheck/cbuild/CMakeFiles  6
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/ryba/workspace/spellcheck/cbuild/CMakeFiles  7
 	@echo "Built target trie"
 .PHONY : dictionary/CMakeFiles/trie.dir/all
 
@@ -180,7 +218,7 @@ clean: dictionary/CMakeFiles/trie.dir/clean
 dictionary/CMakeFiles/word_list.dir/all:
 	$(MAKE) -f dictionary/CMakeFiles/word_list.dir/build.make dictionary/CMakeFiles/word_list.dir/depend
 	$(MAKE) -f dictionary/CMakeFiles/word_list.dir/build.make dictionary/CMakeFiles/word_list.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/ryba/workspace/spellcheck/cbuild/CMakeFiles  7
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/ryba/workspace/spellcheck/cbuild/CMakeFiles  8
 	@echo "Built target word_list"
 .PHONY : dictionary/CMakeFiles/word_list.dir/all
 
@@ -227,9 +265,9 @@ dict-editor/preinstall:
 # Target rules for target dict-editor/CMakeFiles/dict-editor.dir
 
 # All Build rule for target.
-dict-editor/CMakeFiles/dict-editor.dir/all: dictionary/CMakeFiles/word_list.dir/all
-dict-editor/CMakeFiles/dict-editor.dir/all: dictionary/CMakeFiles/trie.dir/all
 dict-editor/CMakeFiles/dict-editor.dir/all: dictionary/CMakeFiles/dictionary.dir/all
+dict-editor/CMakeFiles/dict-editor.dir/all: dictionary/CMakeFiles/trie.dir/all
+dict-editor/CMakeFiles/dict-editor.dir/all: dictionary/CMakeFiles/word_list.dir/all
 	$(MAKE) -f dict-editor/CMakeFiles/dict-editor.dir/build.make dict-editor/CMakeFiles/dict-editor.dir/depend
 	$(MAKE) -f dict-editor/CMakeFiles/dict-editor.dir/build.make dict-editor/CMakeFiles/dict-editor.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/ryba/workspace/spellcheck/cbuild/CMakeFiles  2
@@ -279,9 +317,9 @@ dict-check/preinstall:
 # Target rules for target dict-check/CMakeFiles/dict-check.dir
 
 # All Build rule for target.
-dict-check/CMakeFiles/dict-check.dir/all: dictionary/CMakeFiles/word_list.dir/all
-dict-check/CMakeFiles/dict-check.dir/all: dictionary/CMakeFiles/trie.dir/all
 dict-check/CMakeFiles/dict-check.dir/all: dictionary/CMakeFiles/dictionary.dir/all
+dict-check/CMakeFiles/dict-check.dir/all: dictionary/CMakeFiles/trie.dir/all
+dict-check/CMakeFiles/dict-check.dir/all: dictionary/CMakeFiles/word_list.dir/all
 	$(MAKE) -f dict-check/CMakeFiles/dict-check.dir/build.make dict-check/CMakeFiles/dict-check.dir/depend
 	$(MAKE) -f dict-check/CMakeFiles/dict-check.dir/build.make dict-check/CMakeFiles/dict-check.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/ryba/workspace/spellcheck/cbuild/CMakeFiles  1

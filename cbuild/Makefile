@@ -67,16 +67,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # The main all target
 all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ryba/workspace/spellcheck/cbuild/CMakeFiles /home/ryba/workspace/spellcheck/cbuild/CMakeFiles/progress.marks
@@ -133,6 +123,19 @@ dictionary: cmake_check_build_system
 dictionary/fast:
 	$(MAKE) -f dictionary/CMakeFiles/dictionary.dir/build.make dictionary/CMakeFiles/dictionary.dir/build
 .PHONY : dictionary/fast
+
+#=============================================================================
+# Target rules for targets named testen
+
+# Build rule for target.
+testen: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 testen
+.PHONY : testen
+
+# fast build rule for target.
+testen/fast:
+	$(MAKE) -f dictionary/CMakeFiles/testen.dir/build.make dictionary/CMakeFiles/testen.dir/build
+.PHONY : testen/fast
 
 #=============================================================================
 # Target rules for targets named trie
@@ -195,8 +198,8 @@ help:
 	@echo "... doc"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
 	@echo "... dictionary"
+	@echo "... testen"
 	@echo "... trie"
 	@echo "... word_list"
 	@echo "... dict-editor"

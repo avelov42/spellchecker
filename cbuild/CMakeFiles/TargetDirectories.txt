@@ -2,5 +2,6 @@
 /home/ryba/workspace/spellcheck/cbuild/dict-editor/CMakeFiles/dict-editor.dir
 /home/ryba/workspace/spellcheck/cbuild/dictionary/CMakeFiles/dictionary.dir
 /home/ryba/workspace/spellcheck/cbuild/CMakeFiles/doc.dir
+/home/ryba/workspace/spellcheck/cbuild/dictionary/CMakeFiles/testen.dir
 /home/ryba/workspace/spellcheck/cbuild/dictionary/CMakeFiles/trie.dir
 /home/ryba/workspace/spellcheck/cbuild/dictionary/CMakeFiles/word_list.dir

@@ -22,7 +22,6 @@
 #include <wctype.h>
 
 /* MIEJSCE NA MAKRODEFINICJE */
-//NDEBUG
 #define TRIE_DEBUG_FUNTIONS
 #define TRIE_PRINT_ERRORS
 /* ************************* */

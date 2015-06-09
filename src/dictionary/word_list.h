@@ -5,7 +5,7 @@
     tworzenie listy na stosie (w przeciwieństwie do wszystkich innych modułów),
     co sprawia, że nie word_list_done nie może zwalniać listy (bo free wywołane na stosie to UB)
 
-    @ingroup dictionary
+    @ingroup word_list
     @author Jakub Pawlewicz <pan@mimuw.edu.pl>
     @author Piotr Rybicki <pr360957@students.mimuw.edu.pl>
     @copyright Uniwerstet Warszawski
@@ -40,14 +40,38 @@ struct word_list
     struct word_node* last;
 };
 
+/**
+  Inicjuje istniejącą listę słów na pustą.
+  @param[in,out] *list Lista słów.
+  */
 void word_list_init(struct word_list* list);
 
+/**
+  Zwalnia pamięć zajętą przez dodawanie słów, nie zwalnia samej pamięci.
+  @param[in,out] *list Lista słów.
+  */
 void word_list_done(struct word_list* list);
 
+/**
+  Dodaje słowo do listy.
+  @param[in,out] list Lista słów.
+  @param[in] word Dodawane słowo.
+  @return #WORD_LIST_ADDED lub #WORD_LIST_ERROR
+  */
 int word_list_add(struct word_list* list, const wchar_t* word);
 
+/**
+  Zwraca liczę słów w liście.
+  @param[in] list Lista słów.
+  @return Liczba słów w liście.
+  */
 size_t word_list_size(const struct word_list* list);
 
+/**
+  Zwraca tablicę słów w liście.
+  @param[in] list Lista słów.
+  @return Tablica słów.
+  */
 wchar_t** word_list_get(const struct word_list* list);
 
 #endif /* __WORD_LIST_H__ */

@@ -1,4 +1,13 @@
-///SORTOWANIE W LISCIE POWINNO SIE ODBYWAC PO WCSCOLL
+/** @defgroup dict-check Program dict-check
+ * Prosty program sprawdzający poprawność tekstu.
+ */
+
+/** @file
+ * Jednomodułowy program sprawdzający poprawność tekstu.
+ * @ingroup dict-check
+ * @author Piotr Rybicki <pr360957@students.mimuw.edu.pl>
+ */
+
 #include <stdbool.h>
 #include <wchar.h>
 #include <stdlib.h>
@@ -8,14 +17,13 @@
 #include "../dictionary/word_list.h"
 #include "wctype.h"
 
+#define SINGLE_WORD_MAX_LENGTH 8192
 
-struct dictionary* dict;
-int line = 1;
-int column = 1;
-int wordLine;
-int wordColumn;
-
-#define SINGLE_WORD_MAX_LENGTH 1024
+static struct dictionary* dict;
+static int line = 1;
+static int column = 1;
+static int wordLine;
+static int wordColumn;
 
 /**
  * @brief Wczytuje słowo lub kawałek śmieci.
@@ -23,7 +31,7 @@ int wordColumn;
  * @param[out] isWord - true, jeżeli składowane coś zostało rozpoznane jako słowo
  * @return False gdy napotkano EOF
  */
-bool readIt(wchar_t* dest, bool* isWord)
+static bool readIt(wchar_t* dest, bool* isWord)
 {
     int it = 0;
     bool currentState = false;
@@ -38,34 +46,40 @@ bool readIt(wchar_t* dest, bool* isWord)
             *isWord = currentState;
             return false;
         }
-
         if(in == L'\n')
+        {
             line++;
-        if(it == 0)
+            column = 1;
+        }
+        if(it == 0) //it, nie in !
+        {
             currentState = iswalpha(in); //sprawdzam, czy jest to słowo
+            wordColumn = column-1;
+            wordLine = in == L'\n' ? line-1 : line;
+        }
         if((iswalpha(in) != 0) != currentState) //zmienił się stan, kończymy
         {
             ungetwc(in, stdin);
             column--;
-            if(in == L'\n');
+            if(in == L'\n') //cofamy zmiany, ktore zrobilismy po getwc
                 line--;
             dest[it] = L'\0';
             *isWord = currentState;
             return true; //alles gut
         }
-        else //ten sam stan, czytamy sobie dalej
+        else //ten sam stan, czytamy dalej
             dest[it++] = in;
-
     }
 }
 
+/** @brief Parsuje argumenty, sprawdza poprawność tekstu.
+ * <p>
+ * Jako argumenty argument pobiera nazwę pliku słownika i ewentualny parametr -v,
+ * który powoduje wypisywanie podpowiedzi. Kolejność parametrów jest dowolna, przy czym
+ * słownik nie powinien nazywać się "-*" - wówczas UB.
+ */
 int main(int argc, char** argv)
 {
-    argc = 3;
-    argv[1] = malloc(64);
-    argv[1] = "dupa2";
-    //argv[1] = malloc(64);
-    //argv[1] = "-v";
     setlocale(LC_ALL, "pl_PL.UTF-8");
     char* dictName;
     bool hints;
@@ -96,7 +110,6 @@ int main(int argc, char** argv)
         fwprintf(stderr, L"Cannot load dictionary, ending..\n");
         exit(EXIT_FAILURE);
     }
-
     wchar_t word[SINGLE_WORD_MAX_LENGTH];
     bool isWord;
     while(readIt(word, &isWord))
@@ -112,15 +125,15 @@ int main(int argc, char** argv)
                     dictionary_hints(dict, word, &list);
                     wchar_t** hintsTab = word_list_get(&list);
                     int hlen = word_list_size(&list);
-                    wprintf(L"%d,%d", wordLine, wordColumn);
+                    fwprintf(stderr, L"%d,%d %ls: ", wordLine, wordColumn, word);
                     for(int i = 0; i < hlen; i++)
                         fwprintf(stderr, L"%ls ", hintsTab[i]);
-                }
 
+                    fwprintf(stderr, L"\n");
+                }
             }
         }
         wprintf(L"%ls", word);
     }
     wprintf(L"%ls", word);
-
-}
+    }

@@ -8,16 +8,16 @@
 	<string.h>
 	<wctype.h>
 
-1433699146 /home/ryba/workspace/spellcheck/src/dictionary/dictionary.h
+1433869412 /home/ryba/workspace/spellcheck/src/dictionary/dictionary.h
 	"word_list.h"
 	<stdbool.h>
 	<stdio.h>
 	<wchar.h>
 
-1433694384 /home/ryba/workspace/spellcheck/src/dictionary/word_list.h
+1433874895 /home/ryba/workspace/spellcheck/src/dictionary/word_list.h
 	<wchar.h>
 
-1433700683 source:/home/ryba/workspace/spellcheck/src/dictionary/dictionary.c
+1433870350 source:/home/ryba/workspace/spellcheck/src/dictionary/dictionary.c
 	"dictionary.h"
 	"trie.h"
 	<stdio.h>
@@ -27,13 +27,13 @@
 	<wctype.h>
 	<string.h>
 
-1433679442 /home/ryba/workspace/spellcheck/src/dictionary/trie.h
+1433874579 /home/ryba/workspace/spellcheck/src/dictionary/trie.h
 	<stdbool.h>
 	<wchar.h>
 
 1432987416 /home/ryba/workspace/spellcheck/src/conf.h
 
-1433681138 source:/home/ryba/workspace/spellcheck/src/dictionary/trie.c
+1433874577 source:/home/ryba/workspace/spellcheck/src/dictionary/trie.c
 	<wchar.h>
 	<stdbool.h>
 	<stdlib.h>
@@ -43,7 +43,7 @@
 	<assert.h>
 	"trie.h"
 
-1433694369 source:/home/ryba/workspace/spellcheck/src/dictionary/word_list.c
+1433874908 source:/home/ryba/workspace/spellcheck/src/dictionary/word_list.c
 	<stdlib.h>
 	<stdio.h>
 	<assert.h>
@@ -59,7 +59,7 @@
 	<cmocka.h>
 	"word_list.h"
 
-1433753881 source:/home/ryba/workspace/spellcheck/src/dict-check/dict-check.c
+1433869268 source:/home/ryba/workspace/spellcheck/src/dict-check/dict-check.c
 	<stdbool.h>
 	<wchar.h>
 	<stdlib.h>

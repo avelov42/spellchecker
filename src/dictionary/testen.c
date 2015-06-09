@@ -1,3 +1,16 @@
+/**@defgroup tests Testy
+* Testy word_list i trie
+*/
+
+/**
+ * @file Testy word_list i trie
+ * @ingroup tests
+ * @author Piotr Rybicki <pr360957@mimuw.edu.pl
+ * Test składa się z testów ręcznych badających kilka miejsc potencjalnych błędów w word_list i w trie.
+ * Tak na boku: testom udało się wychwycić parę błędów.<br>
+ * <strong> Definicja NDEBUG w którymkolwiek z testowanych modułów uniemożliwa/ubezsensownia testowanie</strong>
+ */
+
 #include "../dictionary/word_list.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -12,10 +25,12 @@
 
 #define VERBOSE false
 
-#define WORD_MAX_LENGTH 12
-#define LIST_NUMBER_OF_AUTO_TESTS 1000
+#define WORD_MAX_LENGTH 12 ///< Maksymalna długość słowa w losowych testach.
+#define LIST_NUMBER_OF_AUTO_TESTS 1000 ///< Liczba (wstawianych/usuwanych/etc.) słów w testach automatycznych.
 
-wchar_t* getRandomWord(void)
+/** @brief Zwraca losowe słowo
+*/
+static wchar_t* getRandomWord(void)
 {
     int len = rand()%(WORD_MAX_LENGTH+1);
     wchar_t* ret = malloc(sizeof(wchar_t) * (len+1));
@@ -25,7 +40,17 @@ wchar_t* getRandomWord(void)
     return ret;
 }
 
-void list_manual_test(void)
+/** @brief Ręczny test listy.
+ * <p>
+ * Wykonuje następujące testy: <br>
+ * (1) Utworzenie listy, sprawdzenie poprawności<br>
+ * (2) Usunięcie pustej listy<br>
+ * (3) Dodanie pustego słowa, jednoznakowego, 'normalnego'<br>
+ * (4) Sprawdzenie rozmiaru (==3)<br>
+ * (5) Pobranie wyrazów w formie tablicy, sprawdzenie czy są posortowane<br>
+ * (6) Destrukcja listy<br>
+ */
+static void list_manual_test(void)
 {
     wprintf(L"***STARTED MANUAL TEST***\n");
     wprintf(L"Testing list..\n");
@@ -73,7 +98,20 @@ void list_manual_test(void)
     free(tab);
 }
 
-void list_auto_test(void)
+/** @brief Automatyczny test listy
+ * <p> Kolejne testy: (słowo "dużo" należy zamienić na #LIST_NUMBER_OF_AUTO_TESTS)<br>
+ * (1) Wylosowanie dużo słów<br>
+ * (2) Wypisanie dużo słów (jeżeli verbose)<br>
+ * (3) Dodanie tych słów (będących w tablicy do listy)<br>
+ * (4) Sprawdzenie rozmiaru listy<br>
+ * (5) Sprawdzenie obecności pierwszego i ostatniego wyrazu w liście<br>
+ * (6) Pobranie tablicy słów z listy<br>
+ * (7) Wypisanie ich (jeżeli verbose)<br>
+ * (8) Sprawdzenie porządku w pobranej tablicy<br>
+ * (9) Sprawdzenie obecności wszystkich wylosowanych słów w pobranej tablicy (brutalnie)<br>
+ * (10) Destrukcja listy <br>
+ */
+static void list_auto_test(void)
 {
     wprintf(L"*** STARTED AUTOMATIC TEST *** \n");
 
@@ -150,7 +188,10 @@ void list_auto_test(void)
 
 }
 
-
+/**
+ * @brief Wypisuje statystyki drzewa
+ * @return Suma wierzchołków
+ */
 int verifyAndPrintfStats(Node* root)
 {
     int sum, checksum = 0;
@@ -160,7 +201,24 @@ int verifyAndPrintfStats(Node* root)
     return sum;
 }
 
-void manualTrieRevenge(void)
+/**
+ * @brief Ręczne testy drzewa<br>
+ * <p> Wykonuje następujące testy: <br>
+ * (1) Tworzy puste drzewo i je usuwa<br>
+ * (2) Wyszukuje puste słowo, jednoznakowe, normalne w pustym drzewie<br>
+ * (3) Ponawia wyszukiwanie tego samego słowa w pustym drzewie<br>
+ * (4) Usuwa wierzchołki z pustego drzewa.<br>
+ * (5) Próbuje wstawić puste słowo, jednoliterowe, normalne<br>
+ * (6) Sprawdza liczbę wierzchołków w drzewie<br>
+ * (7) Wyszukuje wcześniej wstawione słowa, sprawdza czy nie doszło do modyfikacji drzewa (checksum)<br>
+ * (8) Usuwa kolejne słowa, sprawdzając poprawność usuwania zbędnych wierzchołków<br>
+ * (9) Usunięcie drzewa, stworzenie i dodanie innych wyrazów<br>
+ * (10) Zapisanie drzewa do pliku<br>
+ * (11) Wczytanie drzewa z pliku, porównanie drzew (suma wierzchołków i checksum)<br>
+ * (12) Wyszukanie słów we wczytanym drzewie<br>
+ * (13) Usunięcie obu drzew<br>
+ */
+static void manualTrieRevenge(void)
 {
     wprintf(L"\n***STARTED MANUAL TRIE REVENGE ***\n");
 
@@ -357,7 +415,9 @@ void manualTrieRevenge(void)
 
 #define TRIE_NUMBER_OF_WORDS 100000
 
-wchar_t** getArrayOfRandomWords(int count)
+/** @brief Zwraca tablicę losowych słów
+*/
+static wchar_t** getArrayOfRandomWords(int count)
 {
     wchar_t** ret = malloc(sizeof(wchar_t*) * count);
     for(int i = 0; i < count; i++)
@@ -365,7 +425,9 @@ wchar_t** getArrayOfRandomWords(int count)
     return ret;
 }
 
-void deleteArrayOfWords(wchar_t** tab, int count)
+/** @brief usuwa tablicę count słów
+*/
+static void deleteArrayOfWords(wchar_t** tab, int count)
 {
     for(int i = 0; i < count; i++)
         if(tab[i] != NULL)
@@ -373,8 +435,9 @@ void deleteArrayOfWords(wchar_t** tab, int count)
     free(tab);
 }
 
-///dodaje count slow z tablicy words do drzewa root i sprawdza czy zostaly dodane
-///w przypadku pustych slow w tablicy, sprawdza czy rzeczywiscie nie ma ich w drzewie. (nie powinno ich tam być, nawet po "dodaniu")
+/**
+ @brief Dodaje *dużo* słów do drzewa.
+ */
 void testInsert(Node* root, wchar_t** words, int count)
 {
     wprintf(L"\n***Insertion test ***\n");
@@ -395,6 +458,9 @@ void testInsert(Node* root, wchar_t** words, int count)
 }
 
 #define PROBABILITY_DENOMINATOR 4
+/**
+ @brief Usuwa część słów z drzewa, usuwając je jednocześnie z tablicy.
+ */
 void testDeletePartial(Node* root, wchar_t** words, int count)
 {
     wprintf(L"\n***PARTIAL DELETE TEST***\n");
@@ -414,6 +480,9 @@ void testDeletePartial(Node* root, wchar_t** words, int count)
     wprintf(L"***PARTIAL TEST DONE ***\n");
 }
 
+/**
+ @brief Usuwa wszystkie słowa z drzewa
+ */
 void testDeleteAll(Node* root, wchar_t** words, int count)
 {
     wprintf(L"\n***DELETE ALL TEST***\n");
@@ -435,27 +504,23 @@ void testDeleteAll(Node* root, wchar_t** words, int count)
 
 
 /**
-Automatyczne testy drzewa:
-wygenerowanie listy słów
-insert wszystkich
-find wszystkich
-delete polowy
-find polowy
-delete drugiej polowy
-pustosc?
-usuniecie drzewa
-
-wygenerowanie slow
-wstawienie
-usuniecie drzewa
-
-wygenerowanie slow
-wstawienie ich do drzewa
-zapisanie do pliku
-wczytanie do pliku
-porownanie hash, sumy
-zwolnienie drzewa.
-*/
+ * @brief Automatyczne testy drzewa
+ * <p>
+ * (1) Wygenerowanie listy słów <br>
+ * (2) Wstawienie wszystkich<br>
+ * (3) Wyszukanie wszystkich<br>
+ * (4) Usunięcie części słów<br>
+ * (5) Wyszukanie pozostałej części słów<br>
+ * (6) Usunięcie reszty słów<br>
+ * (7) Sprawdzenie pustości drzewa<br>
+ * (8) Usunięcie drzewa<br>
+ * (9) Stworzenie nowego drzewa, wstawienie nowych słów, usunięcie drzewa<br>
+ * (10) Stworzenie nowego drzewa, wstawienie nowych słów<br>
+ * (11) Zapisanie drzwa do pliku, wczytanie.<br>
+ * (12) Porównanie checksumy i liczby wierzchołków obu drzew<br>
+ * (13) Wyszkukiwanie takich samych losowych słow na obu drzewach<br>
+ * (14) Zwolnienie drzewa<br>
+ */
 void trieAutoTests()
 {
     wchar_t** words = getArrayOfRandomWords(TRIE_NUMBER_OF_WORDS);
@@ -539,37 +604,14 @@ void trieAutoTests()
     wprintf(L"\n***ALL TESTS DONE ***\n\n\n");
 
 }
-
-
-
-/*
-TODO:
--automatyczne testy do trie DONE
--przejrzenie slownika + napisanie alfabetu (czyt. przekopiowanie binsearcha) <done>
--napisanie save i load w dict
--napisanie HINTS
-//koniec na dzis moze byc
--przeczytanie multi_dict
--napisanie dict-checka i ogarniecie testow
--valgrind
--dodanie multi-dict
-*/
 extern void printAlphabet(struct dictionary*);
 int main(int argc, char** argv)
 {
-
     setlocale(LC_ALL, "pl_PL.UTF-8");
-     list_manual_test();
-     list_auto_test();
+    list_manual_test();
+    list_auto_test();
     manualTrieRevenge();
-    // for(int i = 0 ; i<42; i++)
-         trieAutoTests();
-
-    //struct dictionary* dict = dictionary_new();
+    trieAutoTests();
+    return 0;
 
 }
-
-
-
-
-

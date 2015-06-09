@@ -1,7 +1,10 @@
+/**@defgroup word_list Lista słów
+* Lista słów bez ograniczeń.*/
+
 /** @file
   Implementacja listy słów.
 
-  @ingroup dictionary
+  @ingroup word_list
   @author Piotr Rybicki <pr360957@students.mimuw.edu.pl>
   @copyright Uniwerstet Warszawski
   @date 2015-05-10
@@ -12,7 +15,6 @@
 #include <assert.h>
 #include <string.h>
 #include "word_list.h"
-
 
 #define PRINT_ERRORS
 #ifdef PRINT_ERRORS
@@ -54,6 +56,10 @@ static struct word_node* new_node(const wchar_t* word)
     return ret;
 }
 
+/**
+ * @brief Dealokuje pojedynczy węzeł listy.
+ * @param node - węzeł do dealokacji
+ */
 static void delete_word_node(struct word_node* node)
 {
     assert(node != NULL);
@@ -63,17 +69,14 @@ static void delete_word_node(struct word_node* node)
     free(node);
 }
 
+/** @brief Enkapsulacja funkcji porównującej słowa przy sortowaniu
+ * @return -1 gdy *p1 < *p2, 0 gdy *p1 == *p2, 1 wpp
+ */
 static int wcscomparator(const void* p1, const void* p2)
 {
     return wcscoll(*(const wchar_t**) p1, *(const wchar_t**) p2);
 }
 
-/* FUNKCJE INTERFEJSU */
-
-/**
-  Inicjuje istniejącą listę słów na pustą.
-  @param[in,out] *list Lista słów.
-  */
 void word_list_init(struct word_list *list)
 {
     assert(list != NULL);
@@ -82,10 +85,6 @@ void word_list_init(struct word_list *list)
     list->last = NULL;
 }
 
-/**
-  Zwalnia pamięć zajętą przez dodawanie słów, nie zwalnia samej pamięci.
-  @param[in,out] *list Lista słów.
-  */
 void word_list_done(struct word_list *list)
 {
     assert(list != NULL);
@@ -95,12 +94,6 @@ void word_list_done(struct word_list *list)
     list->last = NULL;
 }
 
-/**
-  Dodaje słowo do listy.
-  @param[in,out] list Lista słów.
-  @param[in] word Dodawane słowo.
-  @return #WORD_LIST_ADDED lub #WORD_LIST_ERROR
-  */
 int word_list_add(struct word_list *list, const wchar_t *word)
 {
     assert((list->first != NULL && list->last != NULL) || (list->first == NULL && list->last == NULL));
@@ -127,11 +120,7 @@ int word_list_add(struct word_list *list, const wchar_t *word)
     return WORD_LIST_ADDED;
 }
 
-/**
-  Zwraca tablicę słów w liście.
-  @param[in] list Lista słów.
-  @return Tablica słów.
-  */
+
 wchar_t** word_list_get(const struct word_list* list)
 {
     if(word_list_size(list) == 0)
@@ -155,11 +144,6 @@ wchar_t** word_list_get(const struct word_list* list)
     return ret;
 }
 
-/**
-  Zwraca liczę słów w liście.
-  @param[in] list Lista słów.
-  @return Liczba słów w liście.
-  */
 size_t word_list_size(const struct word_list* list)
 {
     return list->word_count;
