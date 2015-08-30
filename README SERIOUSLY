@@ -1,0 +1,5 @@
+Włączenie/wyłączenie unit-testów odbywa się poprzez zmianę zmiennych *_UNIT_TESTING w pliku CMakeLists.txt w katalogu src.
+
+W momencie oddania wszystkie unit-testy są włączone.
+
+Testowanie dowolnego modułu musi być wykonywane przy włączonych testach dla modułów zależnych. W przeciwnym razie w module zależnym funkcje typu malloc nie zostaną podmienione na odpowiedniki z CMOCKA, co będzie powodowało fake-failures.
