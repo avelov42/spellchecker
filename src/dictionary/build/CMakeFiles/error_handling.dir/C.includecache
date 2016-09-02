@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ryba/workspace/ipp/spellchecker/src/dictionary/error_handling.c
+stdlib.h
+-
+stdio.h
+-
+error_handling.h
+/home/ryba/workspace/ipp/spellchecker/src/dictionary/error_handling.h
+
+/home/ryba/workspace/ipp/spellchecker/src/dictionary/error_handling.h
+

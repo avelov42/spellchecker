@@ -1,0 +1,2 @@
+/usr/bin/ar cr libarray_set.a  CMakeFiles/array_set.dir/array_set.o
+/usr/bin/ranlib libarray_set.a

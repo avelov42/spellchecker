@@ -1,0 +1,5 @@
+/home/ryba/workspace/ipp/spellchecker/src/dictionary/build/CMakeFiles/array_set.dir
+/home/ryba/workspace/ipp/spellchecker/src/dictionary/build/CMakeFiles/dictionary.dir
+/home/ryba/workspace/ipp/spellchecker/src/dictionary/build/CMakeFiles/error_handling.dir
+/home/ryba/workspace/ipp/spellchecker/src/dictionary/build/CMakeFiles/trie.dir
+/home/ryba/workspace/ipp/spellchecker/src/dictionary/build/CMakeFiles/word_list.dir

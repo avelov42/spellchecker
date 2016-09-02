@@ -1,0 +1,2 @@
+/usr/bin/ar cr libdictionary.a  CMakeFiles/dictionary.dir/dictionary.o CMakeFiles/dictionary.dir/word_list.o
+/usr/bin/ranlib libdictionary.a

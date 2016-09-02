@@ -1,6 +1,8 @@
 # dodajemy bibliotekę dictionary, stworzoną na podstawie pliku dictionary.c
 # biblioteka będzie dołączana statycznie (czyli przez linkowanie pliku .o)
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+
 add_library(error_handling error_handling.c)
 
 add_library (word_list word_list.c)
@@ -23,7 +25,7 @@ target_link_libraries(dictionary trie array_set)
 #Testowanie stuktury trie bez testowania array-set będzie
 #sypać leak'ami, ponieważ malloc i free w array-set nie zostaną podmienione
 
-set(UNIT_TESTING 1)
+set(UNIT_TESTING 0)
 set(ARRAY_SET_UNIT_TESTING 1)
 set(TRIE_UNIT_TESTING 1)
 set(WORD_LIST_UNIT_TESTING 1)
